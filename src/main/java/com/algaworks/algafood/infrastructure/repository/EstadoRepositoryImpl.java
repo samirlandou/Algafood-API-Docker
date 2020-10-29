@@ -19,7 +19,7 @@ public class EstadoRepositoryImpl implements EstadoRepository{
 	
 	@Override
 	public List<Estado> listar() {
-		return /*TypedQuery<Cozinha> query = */manager.createQuery("from Estado", Estado.class).getResultList();
+		return /*TypedQuery<Estado> query = */manager.createQuery("from Estado", Estado.class).getResultList();
 	}
 
 	@Override
