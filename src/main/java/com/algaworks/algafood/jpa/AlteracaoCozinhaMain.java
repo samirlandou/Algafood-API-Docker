@@ -17,9 +17,9 @@ public class AlteracaoCozinhaMain {
 		
 		CozinhaRepository cadastroCozinha = applicationContex.getBean(CozinhaRepository.class);
 		
-		Cozinha cozinha1 = new Cozinha();
-		cozinha1.setId(1L);		
+		Cozinha cozinha = new Cozinha();
+		cozinha.setId(1L);		
 		
-		cadastroCozinha.remover(cozinha1);
+		cadastroCozinha.remover(cozinha.getId());
 	}
 }

@@ -6,10 +6,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Data
+@JsonRootName("cozinha") //changes the "Cozinha" into "cozinga" in the json description
+@Data //Generates Getter and Setter and the constructor.
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 //@Table(name = "tab_cozinhas")
@@ -20,6 +23,8 @@ public class Cozinha {
 	@EqualsAndHashCode.Include //Include Equals And HashCode in ID
 	private Long id;
 	
+	//@JsonIgnore
+	//@JsonProperty("titulo") //subtitute "nome" to "titulo"
 	@Column(nullable = false)
 	private String nome;
 
