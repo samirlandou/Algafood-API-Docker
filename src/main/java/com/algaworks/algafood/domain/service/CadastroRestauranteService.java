@@ -21,6 +21,12 @@ public class CadastroRestauranteService {
 	@Autowired
 	private CozinhaRepository cozinhaRepository;	
 	
+	/**
+	 * Salvar Restaurante
+	 * 
+	 * @param restaurante
+	 * @return
+	 */
 	public Restaurante salvar(Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
 		Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
@@ -35,6 +41,11 @@ public class CadastroRestauranteService {
 		return restauranteRepository.salvar(restaurante);
 	}
 	
+	/**
+	 * Excluir Restaurante
+	 * 
+	 * @param restauranteId
+	 */
 	public void excluir(Long restauranteId) {
 		 try {
 			restauranteRepository.remover(restauranteId);

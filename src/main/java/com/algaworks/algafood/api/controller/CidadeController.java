@@ -18,86 +18,87 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
+import com.algaworks.algafood.domain.model.Cidade;
 import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Restaurante;
-import com.algaworks.algafood.domain.repository.RestauranteRepository;
-import com.algaworks.algafood.domain.service.CadastroRestauranteService;
+import com.algaworks.algafood.domain.repository.CidadeRepository;
+import com.algaworks.algafood.domain.service.CadastroCidadeService;
 
 @RestController
-@RequestMapping(value = "/restaurantes")
-public class RestauranteController {
+@RequestMapping("/cidades")
+public class CidadeController {
 
     @Autowired
-    private RestauranteRepository restauranteRepository;
+    private CidadeRepository cidadeRepository;
     
     @Autowired
-    private CadastroRestauranteService cadastroRestauranteService;
-
+    private CadastroCidadeService cadastroCidadeService;
+    
 	/**
-	 * Listar Restaurante
+	 * Listar Cidade
 	 * 
 	 * @return
-	 */
+	 */   
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Restaurante> listar() {
-		return restauranteRepository.listar();
+	public List<Cidade> listar() {
+		return cidadeRepository.listar();
 		
 	}
-
-	/**
-	 * Buscar Restaurante
-	 * 
-	 * @param restauranteId
-	 * @return
-	 */
-    @GetMapping("/{restauranteId}")
-	public ResponseEntity<Restaurante> buscar(@PathVariable Long restauranteId) {
-		Restaurante restaurante = restauranteRepository.buscar(restauranteId);
+ 
+    /**
+     * Buscar Cidade
+     * 
+     * @param cidadeId
+     * @return
+     */
+    @GetMapping("/{cidadeId}")
+	public ResponseEntity<Cidade> buscar(@PathVariable Long cidadeId) {
+		Cidade cidade = cidadeRepository.buscar(cidadeId);
 		
-		if (restaurante != null) {
-			return ResponseEntity.ok(restaurante);
+		if (cidade != null) {
+			return ResponseEntity.ok(cidade);
 		}
 		
 		return ResponseEntity.notFound().build();
 	}
-
+    
     /**
-     * Adicionar Restaurante
+     * Adicionar Cidade
      * 
-     * @param restaurante
+     * @param cidade
      * @return
      */
     @PostMapping
-    public ResponseEntity<?> adicionar(@RequestBody Restaurante restaurante) {
+    public ResponseEntity<?> adicionar(@RequestBody Cidade cidade) {
     	
 		try {
-			restaurante = cadastroRestauranteService.salvar(restaurante);
+			cidade = cadastroCidadeService.salvar(cidade);
 			
-			return ResponseEntity.status(HttpStatus.CREATED).body(restaurante);
+			return ResponseEntity.status(HttpStatus.CREATED).body(cidade);
 		} catch (EntidadeNaoEncontradaException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
     }
     
     /**
-     * Atualizar Restaurante
+     * Atualizar Cidade
      * 
-     * @param restauranteId
-     * @param restaurante
+     * @param cidadeId
+     * @param cidade
      * @return
      */
-	@PutMapping("/{restauranteId}")
-	public ResponseEntity<?> atualizar(@PathVariable Long restauranteId, @RequestBody Restaurante restaurante) {
+	@PutMapping("/{cidadeId}")
+	public ResponseEntity<?> atualizar(@PathVariable Long cidadeId, @RequestBody Restaurante cidade) {
 
 		try {
-			Restaurante restauranteAtual = restauranteRepository.buscar(restauranteId);
-			if (restauranteAtual != null) {
+			Cidade cidadeAtual = cidadeRepository.buscar(cidadeId);
+			if (cidadeAtual != null) {
 				// cozinhaAtual.setNome(cozinha.getNome());
-				BeanUtils.copyProperties(restaurante, restauranteAtual, "id");
+				BeanUtils.copyProperties(cidade,cidadeAtual, "id");
 
-				restauranteAtual = cadastroRestauranteService.salvar(restauranteAtual);
+				cidadeAtual = cadastroCidadeService.salvar(cidadeAtual);
 
-				return ResponseEntity.ok(restauranteAtual);
+				return ResponseEntity.ok(cidadeAtual);
 			}
 			// return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 			return ResponseEntity.notFound().build();
@@ -108,16 +109,16 @@ public class RestauranteController {
 	}
 	
 	/**
-	 * Remover Restaurante
+	 * Remover Cidade
 	 * 
-	 * @param restauranteId
+	 * @param cidadeId
 	 * @return
 	 */
-	@DeleteMapping("/{restauranteId}")
-	public ResponseEntity<Cozinha> remover(@PathVariable Long restauranteId) {
+	@DeleteMapping("/{cidadeId}")
+	public ResponseEntity<Cozinha> remover(@PathVariable Long cidadeId) {
 
 		try {
-			cadastroRestauranteService.excluir(restauranteId);
+			cadastroCidadeService.excluir(cidadeId);
 
 			return ResponseEntity.noContent().build();
 
